@@ -1,0 +1,71 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0.21
+    restart: unless-stopped
+    volumes:
+      - "mysql_data:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: stockdbroot
+      MYSQL_DATABASE: stockdb
+      MYSQL_USER: stockdb
+      MYSQL_PASSWORD: stockdb
+      TZ: Asia/Taipei
+
+  php:
+    build: './php/'
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    volumes:
+      - "./public_html/:/var/www/html"
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_DATABASE: stockdb
+      MYSQL_USER: stockdb
+      MYSQL_PASSWORD: stockdb
+
+  # 測試vue用
+  vue:
+    build: './vue/'
+    restart: always
+    working_dir: '/var/vue/'
+    image: node:14.8.0
+    depends_on:
+      - mysql
+      - php
+    volumes:
+      - "./public_html/appSrc/stockFutQpt/:/var/vue"
+    command: npm run serve
+    ports: 
+      - "81:8080"
+
+  scrapy:
+    build: './scrapy/'
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    volumes:
+      - "./public_html/:/var/www/html"
+    environment:
+      ROOT: /var/www/html
+      MYSQL_HOST: mysql
+      MYSQL_DATABASE: stockdb
+      MYSQL_USER: stockdb
+      MYSQL_PASSWORD: stockdb
+
+  apache:
+    build: './apache/'
+    restart: unless-stopped
+    depends_on:
+      - mysql
+      - php
+      - vue
+    volumes:
+      - "./public_html/:/var/www/html"
+    ports:
+      - "8080:80"
+
+volumes:
+  mysql_data:

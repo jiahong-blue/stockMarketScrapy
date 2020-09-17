@@ -1,0 +1,4 @@
+<?php
+require_once __DIR__ . '/router/router.php';
+?>
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><title>stock</title><link href=/dist/css/app.22abf28f.css rel=preload as=style><link href=/dist/css/chunk-vendors.84bb20f7.css rel=preload as=style><link href=/dist/js/app.dce61d1c.js rel=preload as=script><link href=/dist/js/chunk-vendors.c65b9ead.js rel=preload as=script><link href=/dist/css/chunk-vendors.84bb20f7.css rel=stylesheet><link href=/dist/css/app.22abf28f.css rel=stylesheet></head><body><noscript><strong>We're sorry but stock doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=/dist/js/chunk-vendors.c65b9ead.js></script><script src=/dist/js/app.dce61d1c.js></script></body></html>
